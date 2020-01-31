@@ -2,7 +2,7 @@
   "name": "dwenzel/jwt-auth",
   "description": "PSR Compliant JSON Web Token Middleware for TYPO3 CMS.",
   "type": "typo3-cms-extension",
-  "license": "GPL2+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Dirk Wenzel",
