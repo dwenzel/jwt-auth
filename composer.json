@@ -1,0 +1,53 @@
+{
+  "name": "dwenzel/jwt-auth",
+  "description": "PSR Compliant JSON Web Token Middleware for TYPO3 CMS.",
+  "type": "typo3-cms-extension",
+  "license": "GPL2+",
+  "authors": [
+    {
+      "name": "Dirk Wenzel",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DWenzel\\JwtAuth\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DWenzel\\JwtAuth\\Tests\\": "Tests"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "jwt_auth",
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".build/web"
+    }
+  },
+  "config": {
+    "vendor-dir": ".build/vendor",
+    "bin-dir": ".build/bin",
+    "preferred-install": {
+      "typo3/cms": "source",
+      "typo3/cms-core": "source",
+      "*": "dist"
+    }
+  },
+  "require": {
+    "typo3/cms-core": "^9.5 || ^10.2",
+    "typo3/cms-extbase": "^9.5 || ^10.2",
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "nimut/testing-framework": "^5.0"
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "mkdir -p .build/web/typo3conf/ext/",
+      "mkdir -p .build/log/coverage/",
+      "[ -L .build/web/typo3conf/ext/jwt_auth ] || ln -snvf ../../../../. .build/web/typo3conf/ext/jwt_auth"
+    ]
+  }
+}
