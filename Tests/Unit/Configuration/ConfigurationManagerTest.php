@@ -1,6 +1,6 @@
 <?php
 
-namespace DWenzel\JwtAuth\Tests\Configuration;
+namespace DWenzel\JwtAuth\Tests\Unit\Configuration;
 
 use DWenzel\JwtAuth\Configuration\ConfigurationManager;
 use DWenzel\JwtAuth\Configuration\ConfigurationManagerInterface;
@@ -46,4 +46,5 @@ class ConfigurationManagerTest extends TestCase
             $this->subject
         );
     }
+
 }

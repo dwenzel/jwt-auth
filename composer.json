@@ -38,6 +38,7 @@
   "require": {
     "typo3/cms-core": "^9.5 || ^10.2",
     "typo3/cms-extbase": "^9.5 || ^10.2",
+    "web-token/jwt-easy": "^2.1",
     "php": ">=7.2"
   },
   "require-dev": {

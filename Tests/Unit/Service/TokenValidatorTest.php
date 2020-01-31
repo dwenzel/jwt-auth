@@ -1,6 +1,9 @@
 <?php
 
-namespace DWenzel\JwtAuth\Configuration;
+namespace DWenzel\JwtAuth\Tests\Unit\Service;
+
+use DWenzel\JwtAuth\Service\TokenValidator;
+use PHPUnit\Framework\TestCase;
 
 /***************************************************************
  *  Copyright notice
@@ -20,41 +23,25 @@ namespace DWenzel\JwtAuth\Configuration;
  ***************************************************************/
 
 /**
- * Class ConfigurationManager
+ * Class TokenValidatorTest
  */
-class ConfigurationManager implements ConfigurationManagerInterface
+class TokenValidatorTest extends TestCase
 {
     /**
-     * @param string $type
-     * @return array
+     * @var TokenValidator
      */
-    public function get(string $type): array
-    {
-        $configuration = [];
+    protected $subject;
 
-        return $configuration;
+    public function setUp()
+    {
+        $this->subject = new TokenValidator();
     }
 
-    /**
-     * Sets the configuration.
-     * @param string $type
-     * @param array $configuration
-     */
-    public function set(string $type, array $configuration): void
+    public function testIsValidReturnsFalseForEmptyToken()
     {
-
+        $token = '';
+        $this->assertFalse(
+            $this->subject->isValid($token)
+        );
     }
-
-    /**
-     * Returns TRUE if a certain feature, identified by $featureName
-     * should be activated
-     *
-     * @param string $featureName
-     * @return bool
-     */
-    public function isFeatureEnabled($featureName): bool
-    {
-
-    }
-
 }

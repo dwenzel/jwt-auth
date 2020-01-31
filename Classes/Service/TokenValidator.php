@@ -26,8 +26,18 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class TokenValidator implements SingletonInterface, TokenValidatorInterface
 {
-    public function validate($token): bool
+    /**
+     * Validates a token
+     *
+     * @param string $token
+     * @return bool
+     */
+    public function isValid(string $token): bool
     {
-        return false;
+        if (empty($token)) {
+            return false;
+        }
+
+        return true;
     }
 }

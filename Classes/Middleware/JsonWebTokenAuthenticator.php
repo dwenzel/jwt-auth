@@ -2,6 +2,10 @@
 
 namespace DWenzel\JwtAuth\Middleware;
 
+use DWenzel\JwtAuth\Configuration\ConfigurationManager;
+use DWenzel\JwtAuth\Configuration\ConfigurationManagerInterface;
+use DWenzel\JwtAuth\Configuration\SettingsInterface;
+use DWenzel\JwtAuth\Service\TokenValidator;
 use DWenzel\JwtAuth\Service\TokenValidatorInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,11 +40,14 @@ class JsonWebTokenAuthenticator implements MiddlewareInterface
      */
     protected $validator;
 
+
     protected $configuration;
 
-    public function __construct(TokenValidatorInterface $validator = null)
+    public function __construct(ConfigurationManagerInterface $configurationManager = null, TokenValidatorInterface $validator = null)
     {
-        $this->validator = $validator ?? GeneralUtility::makeInstance(TokenValidatorInterface::class);
+        $this->validator = $validator ?? GeneralUtility::makeInstance(TokenValidator::class);
+        $configurationManager = $configurationManager ?? GeneralUtility::makeInstance(ConfigurationManager::class);
+        $this->configuration = $configurationManager->get(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
     }
 
     /**
@@ -48,7 +55,45 @@ class JsonWebTokenAuthenticator implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($request->getHeader())
-        // TODO: Implement process() method.
+        $token = $this->extractToken($request);
+        if (!$this->validator->isValid($token)){
+            return $handler->handle($request);
+        }
+
+        // TODO: token is valid: extract user and claims and add
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @return string
+     */
+    protected function extractToken(ServerRequestInterface $request): string
+    {
+        // read authorization headers
+        $headerName = $this->configuration[SettingsInterface::KEY_HEADER_NAME] ?? SettingsInterface::DEFAULT_AUTHORIZATION_HEADER;
+        $headers = $request->getHeader($headerName);
+
+        if (empty($headers)) {
+            return '';
+        }
+
+        return $this->parseHeaders($headers);
+    }
+
+    /**
+     * Parses an array of headers
+     *
+     * @param array $headers
+     * @return mixed|string
+     */
+    protected function parseHeaders(array $headers)
+    {
+        if (!empty($headers)) {
+            if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return '';
     }
 }

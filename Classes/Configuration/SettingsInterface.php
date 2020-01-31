@@ -20,41 +20,15 @@ namespace DWenzel\JwtAuth\Configuration;
  ***************************************************************/
 
 /**
- * Class ConfigurationManager
+ * Interface SettingsInterface
  */
-class ConfigurationManager implements ConfigurationManagerInterface
+interface SettingsInterface
 {
-    /**
-     * @param string $type
-     * @return array
-     */
-    public function get(string $type): array
-    {
-        $configuration = [];
-
-        return $configuration;
-    }
+    public const DEFAULT_AUTHORIZATION_HEADER = 'Authorization';
 
     /**
-     * Sets the configuration.
-     * @param string $type
-     * @param array $configuration
+     * keys
      */
-    public function set(string $type, array $configuration): void
-    {
-
-    }
-
-    /**
-     * Returns TRUE if a certain feature, identified by $featureName
-     * should be activated
-     *
-     * @param string $featureName
-     * @return bool
-     */
-    public function isFeatureEnabled($featureName): bool
-    {
-
-    }
-
+    public const KEY_HEADER = 'header';
+    public const KEY_HEADER_NAME = 'headerName';
 }

@@ -24,5 +24,5 @@ namespace DWenzel\JwtAuth\Service;
  */
 interface TokenValidatorInterface
 {
-    public function validate($token): bool;
+    public function isValid(string $token): bool;
 }
