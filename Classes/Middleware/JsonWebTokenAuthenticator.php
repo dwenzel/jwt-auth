@@ -7,6 +7,7 @@ use DWenzel\JwtAuth\Configuration\ConfigurationManagerInterface;
 use DWenzel\JwtAuth\Configuration\SettingsInterface;
 use DWenzel\JwtAuth\Service\TokenValidator;
 use DWenzel\JwtAuth\Service\TokenValidatorInterface;
+use Jose\Easy\Load;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -59,6 +60,8 @@ class JsonWebTokenAuthenticator implements MiddlewareInterface
         if (!$this->validator->isValid($token)){
             return $handler->handle($request);
         }
+
+        $jsonWebToken = Load::jws($token);
 
         // TODO: token is valid: extract user and claims and add
     }
